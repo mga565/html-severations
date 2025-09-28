@@ -2,25 +2,22 @@
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML &amp; CSS File Parser</title>
+    <title>HTML File Parser</title>
     
 <link rel="stylesheet" href="style.css"></head>
 <body>
     <div class="container">
-        <h1>HTML &amp; CSS File Parser</h1>
-        <p class="subtitle">Upload HTML and CSS files to extract and separate components</p>
+        <h1>HTML File Parser</h1>
+        <p class="subtitle">Upload HTML files to extract and separate components of CSS, JS, and HTML.</p>
         
         <div class="upload-area" id="upload-area">
             <div class="upload-icon">📁</div>
-            <p class="upload-text">Click to upload HTML and CSS files or drag and drop them here</p>
+            <p class="upload-text">Click to upload HTML files or drag and drop them here</p>
             <input type="file" id="file-input" accept=".html,.htm,.css" multiple="">
         </div>
         
         <div class="file-type-filters">
-            <button class="filter-btn active" data-filter="all">All Files</button>
-            <button class="filter-btn" data-filter="html">HTML Only</button>
-            <button class="filter-btn" data-filter="css">CSS Only</button>
-        </div>
+
         
         <div class="file-list" id="file-list"></div>
         <div class="file-info" id="file-info"></div>
@@ -69,16 +66,10 @@
             <div class="html-files-list" id="html-files-list">
                 <h3>Processed HTML Files</h3>
                 <div class="html-file-previews" id="html-file-previews"></div>
-                <div class="html-file-links" id="html-file-links"></div>
             </div>
             
-            <div class="download-links">
-                <a href="#" class="download-link" id="download-css">
-                    <span class="download-icon">⬇️</span> <span id="download-css-text">Download CSS</span>
-                </a>
-                <a href="#" class="download-link" id="download-js">
-                    <span class="download-icon">⬇️</span> <span id="download-js-text">Download JavaScript</span>
-                </a>
+            <div class="all-download-buttons" id="all-download-buttons">
+                <!-- HTML, CSS, and JS download buttons will be added here -->
             </div>
         </div>
         
@@ -91,6 +82,8 @@
 
     
 
-<script src="script.js" defer=""></script>
+<script src="index.js" defer=""></script>
+
 </body>
+
 </html>
