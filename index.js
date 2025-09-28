@@ -16,9 +16,12 @@
             
             const cssPreview = document.getElementById('css-preview');
             const jsPreview = document.getElementById('js-preview');
-            
+            const cssHeading = document.getElementById('css-heading');
+            const jsHeading = document.getElementById('js-heading');
             const downloadCss = document.getElementById('download-css');
             const downloadJs = document.getElementById('download-js');
+            const downloadCssText = document.getElementById('download-css-text');
+            const downloadJsText = document.getElementById('download-js-text');
             
             const cssCopyBtn = document.querySelector('[data-target="css-preview"]');
             const jsCopyBtn = document.querySelector('[data-target="js-preview"]');
@@ -278,7 +281,10 @@
                     // Extract and combine content from all files
                     const { htmlFiles, combinedCss, combinedJs } = separateContentFromMultipleFiles(htmlContents, cssContents);
                     
-                    // Display the combined content
+                    // Update labels based on number of files
+                    updateLabels(htmlContents.length, cssContents.length, combinedCss, combinedJs);
+                    
+                    // Display the content
                     cssPreview.textContent = combinedCss || 'No CSS content found';
                     jsPreview.textContent = combinedJs || 'No JavaScript content found';
                     
@@ -297,6 +303,40 @@
                     showError('Error processing files: ' + error.message);
                 } finally {
                     spinner.style.display = 'none';
+                }
+            }
+            
+            function updateLabels(htmlFileCount, cssFileCount, cssContent, jsContent) {
+                const hasCss = cssContent && cssContent !== 'No CSS content found';
+                const hasJs = jsContent && jsContent !== 'No JavaScript content found';
+                
+                // Update CSS labels
+                if (!hasCss) {
+                    cssHeading.textContent = 'CSS';
+                    downloadCssText.textContent = 'Download CSS';
+                } else if (htmlFileCount + cssFileCount <= 1) {
+                    if (cssFileCount === 1) {
+                        cssHeading.textContent = 'CSS from File';
+                        downloadCssText.textContent = 'Download CSS';
+                    } else {
+                        cssHeading.textContent = 'Extracted CSS';
+                        downloadCssText.textContent = 'Download CSS';
+                    }
+                } else {
+                    cssHeading.textContent = 'Combined CSS';
+                    downloadCssText.textContent = 'Download Combined CSS';
+                }
+                
+                // Update JS labels
+                if (!hasJs) {
+                    jsHeading.textContent = 'JavaScript';
+                    downloadJsText.textContent = 'Download JavaScript';
+                } else if (htmlFileCount <= 1) {
+                    jsHeading.textContent = 'Extracted JavaScript';
+                    downloadJsText.textContent = 'Download JavaScript';
+                } else {
+                    jsHeading.textContent = 'Combined JavaScript';
+                    downloadJsText.textContent = 'Download Combined JavaScript';
                 }
             }
             
