@@ -206,30 +206,29 @@
             border: 1px solid #eee;
         }
         
-        .download-links {
+        .all-download-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
         
         .download-link {
             display: inline-flex;
             align-items: center;
-            background: linear-gradient(to right, #6e8efb, #a777e3);
             color: white;
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 50px;
             font-weight: 600;
             transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(110, 142, 251, 0.4);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         
         .download-link:hover:not(.disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(110, 142, 251, 0.6);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
         }
         
         .download-link.disabled {
@@ -238,6 +237,33 @@
             cursor: not-allowed;
             box-shadow: none;
             opacity: 0.6;
+        }
+        
+        /* HTML Download Button - Blue and Red */
+        .html-download {
+            background: linear-gradient(to right, #3498db, #e74c3c);
+        }
+        
+        .html-download:hover {
+            background: linear-gradient(to right, #2980b9, #c0392b);
+        }
+        
+        /* CSS Download Button - Blue and Purple (original) */
+        .css-download {
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .css-download:hover {
+            background: linear-gradient(to right, #5a7dfa, #9666d8);
+        }
+        
+        /* JS Download Button - Blue and Yellow */
+        .js-download {
+            background: linear-gradient(to right, #3498db, #f1c40f);
+        }
+        
+        .js-download:hover {
+            background: linear-gradient(to right, #2980b9, #d4ac0d);
         }
         
         .download-icon {
@@ -389,30 +415,6 @@
             font-size: 0.9rem;
             white-space: pre-wrap;
             border: 1px solid #eee;
-        }
-
-        .html-file-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .html-file-link {
-            display: inline-flex;
-            align-items: center;
-            background: #e3f2fd;
-            color: #1976d2;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .html-file-link:hover {
-            background: #bbdefb;
-            transform: translateY(-2px);
         }
 
         .file-type-filters {
