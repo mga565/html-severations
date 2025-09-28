@@ -2,13 +2,13 @@
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-File HTML &amp; CSS Parser</title>
+    <title>HTML &amp; CSS File Parser</title>
     
 <link rel="stylesheet" href="style.css"></head>
 <body>
     <div class="container">
-        <h1>Multi-File HTML &amp; CSS Parser</h1>
-        <p class="subtitle">Upload HTML and CSS files to combine all CSS into one file and separate components</p>
+        <h1>HTML &amp; CSS File Parser</h1>
+        <p class="subtitle">Upload HTML and CSS files to extract and separate components</p>
         
         <div class="upload-area" id="upload-area">
             <div class="upload-icon">📁</div>
@@ -32,11 +32,11 @@
         <div class="error" id="error-message"></div>
         
         <div class="results" id="results">
-            <h2>Separated Components</h2>
+            <h2>Extracted Components</h2>
             <div class="file-previews">
                 <div class="preview">
                     <div class="preview-header">
-                        <h3>Combined CSS</h3>
+                        <h3 id="css-heading">CSS</h3>
                         <button type="button" class="btn-clipboard" data-target="css-preview" aria-label="Copy CSS content">
                             <svg class="clipboard-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"></path>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="preview">
                     <div class="preview-header">
-                        <h3>Combined JavaScript</h3>
+                        <h3 id="js-heading">JavaScript</h3>
                         <button type="button" class="btn-clipboard" data-target="js-preview" aria-label="Copy JavaScript content">
                             <svg class="clipboard-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"></path>
@@ -67,23 +67,23 @@
             </div>
             
             <div class="html-files-list" id="html-files-list">
-                <h3>Generated HTML Files</h3>
+                <h3>Processed HTML Files</h3>
                 <div class="html-file-previews" id="html-file-previews"></div>
                 <div class="html-file-links" id="html-file-links"></div>
             </div>
             
             <div class="download-links">
                 <a href="#" class="download-link" id="download-css">
-                    <span class="download-icon">⬇️</span> Download Combined CSS
+                    <span class="download-icon">⬇️</span> <span id="download-css-text">Download CSS</span>
                 </a>
                 <a href="#" class="download-link" id="download-js">
-                    <span class="download-icon">⬇️</span> Download Combined JavaScript
+                    <span class="download-icon">⬇️</span> <span id="download-js-text">Download JavaScript</span>
                 </a>
             </div>
         </div>
         
         <footer>
-            <p>This tool extracts inline CSS from &lt;style&gt; tags and JavaScript from &lt;script&gt; tags across all HTML files, and combines them with uploaded CSS files</p>
+            <p>This tool extracts inline CSS from &lt;style&gt; tags and JavaScript from &lt;script&gt; tags</p>
         </footer>
     </div>
 
@@ -91,4 +91,6 @@
 
     
 
-<script src="index.js" defer=""></script></body></html>
+<script src="script.js" defer=""></script>
+</body>
+</html>
