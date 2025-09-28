@@ -2,23 +2,30 @@
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML File Parser &amp; Separator</title>
+    <title>Multi-File HTML &amp; CSS Parser</title>
     
 <link rel="stylesheet" href="style.css"></head>
 <body>
     <div class="container">
-        <h1>HTML File Parser &amp; Separator</h1>
-        <p class="subtitle">Upload an HTML file to separate its HTML, CSS, and JavaScript components</p>
+        <h1>Multi-File HTML &amp; CSS Parser</h1>
+        <p class="subtitle">Upload HTML and CSS files to combine all CSS into one file and separate components</p>
         
         <div class="upload-area" id="upload-area">
             <div class="upload-icon">📁</div>
-            <p class="upload-text">Click to upload an HTML file or drag and drop it here</p>
-            <input type="file" id="file-input" accept=".html,.htm">
+            <p class="upload-text">Click to upload HTML and CSS files or drag and drop them here</p>
+            <input type="file" id="file-input" accept=".html,.htm,.css" multiple="">
         </div>
         
+        <div class="file-type-filters">
+            <button class="filter-btn active" data-filter="all">All Files</button>
+            <button class="filter-btn" data-filter="html">HTML Only</button>
+            <button class="filter-btn" data-filter="css">CSS Only</button>
+        </div>
+        
+        <div class="file-list" id="file-list"></div>
         <div class="file-info" id="file-info"></div>
         
-        <button class="btn" id="process-btn" disabled="">Process File</button>
+        <button class="btn" id="process-btn" disabled="">Process Files</button>
         
         <div class="spinner" id="spinner"></div>
         
@@ -29,23 +36,8 @@
             <div class="file-previews">
                 <div class="preview">
                     <div class="preview-header">
-                        <h3>HTML Content</h3>
-                        <button type="button" class="btn-clipboard" data-target="html-preview" aria-label="Copy HTML content">
-                            <svg class="clipboard-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"></path>
-                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"></path>
-                            </svg>
-                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="preview-content" id="html-preview"></div>
-                </div>
-                <div class="preview">
-                    <div class="preview-header">
-                        <h3>CSS Content</h3>
-                        <button type="button" class="btn-clipboard" data-target="css-preview" aria-label="Copy CSS content" disabled="">
+                        <h3>Combined CSS</h3>
+                        <button type="button" class="btn-clipboard" data-target="css-preview" aria-label="Copy CSS content">
                             <svg class="clipboard-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"></path>
                                 <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"></path>
@@ -59,8 +51,8 @@
                 </div>
                 <div class="preview">
                     <div class="preview-header">
-                        <h3>JavaScript Content</h3>
-                        <button type="button" class="btn-clipboard" data-target="js-preview" aria-label="Copy JavaScript content" disabled="">
+                        <h3>Combined JavaScript</h3>
+                        <button type="button" class="btn-clipboard" data-target="js-preview" aria-label="Copy JavaScript content">
                             <svg class="clipboard-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"></path>
                                 <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"></path>
@@ -74,21 +66,24 @@
                 </div>
             </div>
             
+            <div class="html-files-list" id="html-files-list">
+                <h3>Generated HTML Files</h3>
+                <div class="html-file-previews" id="html-file-previews"></div>
+                <div class="html-file-links" id="html-file-links"></div>
+            </div>
+            
             <div class="download-links">
-                <a href="#" class="download-link" id="download-html">
-                    <span class="download-icon">⬇️</span> Download HTML
+                <a href="#" class="download-link" id="download-css">
+                    <span class="download-icon">⬇️</span> Download Combined CSS
                 </a>
-                <a href="#" class="download-link disabled" id="download-css">
-                    <span class="download-icon">⬇️</span> Download CSS
-                </a>
-                <a href="#" class="download-link disabled" id="download-js">
-                    <span class="download-icon">⬇️</span> Download JavaScript
+                <a href="#" class="download-link" id="download-js">
+                    <span class="download-icon">⬇️</span> Download Combined JavaScript
                 </a>
             </div>
         </div>
         
         <footer>
-            <p>This tool extracts inline CSS from &lt;style&gt; tags and JavaScript from &lt;script&gt; tags</p>
+            <p>This tool extracts inline CSS from &lt;style&gt; tags and JavaScript from &lt;script&gt; tags across all HTML files, and combines them with uploaded CSS files</p>
         </footer>
     </div>
 
@@ -96,6 +91,4 @@
 
     
 
-<script src="index.js" defer=""></script>
-</body>
-</html>
+<script src="script.js" defer=""></script></body></html>
