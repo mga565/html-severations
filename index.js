@@ -11,17 +11,13 @@
             const fileList = document.getElementById('file-list');
             const notification = document.getElementById('notification');
             const htmlFilePreviews = document.getElementById('html-file-previews');
-            const htmlFileLinks = document.getElementById('html-file-links');
+            const allDownloadButtons = document.getElementById('all-download-buttons');
             const filterButtons = document.querySelectorAll('.filter-btn');
             
             const cssPreview = document.getElementById('css-preview');
             const jsPreview = document.getElementById('js-preview');
             const cssHeading = document.getElementById('css-heading');
             const jsHeading = document.getElementById('js-heading');
-            const downloadCss = document.getElementById('download-css');
-            const downloadJs = document.getElementById('download-js');
-            const downloadCssText = document.getElementById('download-css-text');
-            const downloadJsText = document.getElementById('download-js-text');
             
             const cssCopyBtn = document.querySelector('[data-target="css-preview"]');
             const jsCopyBtn = document.querySelector('[data-target="js-preview"]');
@@ -288,11 +284,11 @@
                     cssPreview.textContent = combinedCss || 'No CSS content found';
                     jsPreview.textContent = combinedJs || 'No JavaScript content found';
                     
-                    // Create HTML file previews and download links
+                    // Create HTML file previews
                     createHtmlFilePreviews(htmlFiles);
                     
-                    // Create combined CSS and JS download links
-                    createCombinedDownloadLinks(combinedCss, combinedJs);
+                    // Create all download buttons in one line
+                    createAllDownloadButtons(htmlFiles, combinedCss, combinedJs);
                     
                     // Enable/disable buttons based on content availability
                     toggleButtons(combinedCss, combinedJs);
@@ -313,30 +309,23 @@
                 // Update CSS labels
                 if (!hasCss) {
                     cssHeading.textContent = 'CSS';
-                    downloadCssText.textContent = 'Download CSS';
                 } else if (htmlFileCount + cssFileCount <= 1) {
                     if (cssFileCount === 1) {
                         cssHeading.textContent = 'CSS from File';
-                        downloadCssText.textContent = 'Download CSS';
                     } else {
                         cssHeading.textContent = 'Extracted CSS';
-                        downloadCssText.textContent = 'Download CSS';
                     }
                 } else {
                     cssHeading.textContent = 'Combined CSS';
-                    downloadCssText.textContent = 'Download Combined CSS';
                 }
                 
                 // Update JS labels
                 if (!hasJs) {
                     jsHeading.textContent = 'JavaScript';
-                    downloadJsText.textContent = 'Download JavaScript';
                 } else if (htmlFileCount <= 1) {
                     jsHeading.textContent = 'Extracted JavaScript';
-                    downloadJsText.textContent = 'Download JavaScript';
                 } else {
                     jsHeading.textContent = 'Combined JavaScript';
-                    downloadJsText.textContent = 'Download Combined JavaScript';
                 }
             }
             
@@ -385,10 +374,10 @@
                         doc.head.appendChild(link);
                     }
                     
-                    // Add script tag for combined JS if we have any JS
-                    if (combinedJs.trim() && !doc.querySelector('script[src="script.js"]')) {
+                    // Add script tag for combined JS if we have any JS - CHANGED TO index.js
+                    if (combinedJs.trim() && !doc.querySelector('script[src="index.js"]')) {
                         const script = doc.createElement('script');
-                        script.src = 'script.js';
+                        script.src = 'index.js';
                         script.defer = true;
                         doc.body.appendChild(script);
                     }
@@ -418,25 +407,20 @@
                 // Enable CSS buttons only if there's CSS content
                 if (css !== 'No CSS content found') {
                     cssCopyBtn.disabled = false;
-                    downloadCss.classList.remove('disabled');
                 } else {
                     cssCopyBtn.disabled = true;
-                    downloadCss.classList.add('disabled');
                 }
                 
                 // Enable JS buttons only if there's JS content
                 if (js !== 'No JavaScript content found') {
                     jsCopyBtn.disabled = false;
-                    downloadJs.classList.remove('disabled');
                 } else {
                     jsCopyBtn.disabled = true;
-                    downloadJs.classList.add('disabled');
                 }
             }
             
             function createHtmlFilePreviews(htmlFiles) {
                 htmlFilePreviews.innerHTML = '';
-                htmlFileLinks.innerHTML = '';
                 
                 if (htmlFiles.length === 0) {
                     htmlFilePreviews.innerHTML = '<div class="no-html-message">No HTML files were processed</div>';
@@ -490,33 +474,49 @@
                     
                     // Add to the previews container
                     htmlFilePreviews.appendChild(previewContainer);
-                    
-                    // Create download link
-                    const link = document.createElement('a');
-                    link.className = 'html-file-link';
-                    link.textContent = htmlFile.name;
-                    
-                    const blob = new Blob([htmlFile.content], { type: 'text/html' });
-                    link.href = URL.createObjectURL(blob);
-                    link.download = htmlFile.name;
-                    
-                    htmlFileLinks.appendChild(link);
                 });
             }
             
-            function createCombinedDownloadLinks(css, js) {
-                // Create blobs and URLs for CSS only if there's CSS content
+            function createAllDownloadButtons(htmlFiles, css, js) {
+                allDownloadButtons.innerHTML = '';
+                
+                // Create HTML file download buttons
+                htmlFiles.forEach((htmlFile) => {
+                    const downloadBtn = document.createElement('a');
+                    downloadBtn.className = 'download-link html-download';
+                    downloadBtn.innerHTML = `<span class="download-icon">⬇️</span> Download ${htmlFile.name}`;
+                    
+                    const blob = new Blob([htmlFile.content], { type: 'text/html' });
+                    downloadBtn.href = URL.createObjectURL(blob);
+                    downloadBtn.download = htmlFile.name;
+                    
+                    allDownloadButtons.appendChild(downloadBtn);
+                });
+                
+                // Create CSS download button if there's CSS content
                 if (css !== 'No CSS content found') {
+                    const cssDownloadBtn = document.createElement('a');
+                    cssDownloadBtn.className = 'download-link css-download';
+                    cssDownloadBtn.innerHTML = `<span class="download-icon">⬇️</span> Download CSS`;
+                    
                     const cssBlob = new Blob([css], { type: 'text/css' });
-                    downloadCss.href = URL.createObjectURL(cssBlob);
-                    downloadCss.download = 'style.css';
+                    cssDownloadBtn.href = URL.createObjectURL(cssBlob);
+                    cssDownloadBtn.download = 'style.css';
+                    
+                    allDownloadButtons.appendChild(cssDownloadBtn);
                 }
                 
-                // Create blobs and URLs for JS only if there's JS content
+                // Create JS download button if there's JS content - CHANGED TO index.js
                 if (js !== 'No JavaScript content found') {
+                    const jsDownloadBtn = document.createElement('a');
+                    jsDownloadBtn.className = 'download-link js-download';
+                    jsDownloadBtn.innerHTML = `<span class="download-icon">⬇️</span> Download JavaScript`;
+                    
                     const jsBlob = new Blob([js], { type: 'text/javascript' });
-                    downloadJs.href = URL.createObjectURL(jsBlob);
-                    downloadJs.download = 'script.js';
+                    jsDownloadBtn.href = URL.createObjectURL(jsBlob);
+                    jsDownloadBtn.download = 'index.js';
+                    
+                    allDownloadButtons.appendChild(jsDownloadBtn);
                 }
             }
             
